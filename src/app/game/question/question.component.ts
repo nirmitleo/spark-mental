@@ -10,6 +10,7 @@ export class QuestionComponent implements OnInit {
 
   blank = true;
   verdict = false;
+  answer = '';
   @Input() question: Question;
   @Output() verdictChange = new EventEmitter<boolean>();
 
@@ -19,8 +20,8 @@ export class QuestionComponent implements OnInit {
   ngOnInit() {
   }
 
-  evaluateResult(event) {
-    const response: string = event.target.value;
+  evaluateResult() {
+    const response: string = this.answer + '';
     this.blank = true;
     this.verdict = false;
 

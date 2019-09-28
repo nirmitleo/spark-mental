@@ -1,8 +1,8 @@
 {
-  "name": "angular-mental-math",
-  "short_name": "angular-mental-math",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "spark-mental",
+  "short_name": "spark-mental",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

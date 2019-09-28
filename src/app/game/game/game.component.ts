@@ -29,9 +29,10 @@ export class GameComponent implements OnInit {
 
     if (this.correct === this.GAME_LENGTH) {
       console.log('game over!');
-      setTimeout(() => {
-        this.initializeGame();
-      }, 2000);
+      // setTimeout(() => {
+      //   this.initializeGame();
+      // }, 2000);
+      this.initializeGame();
     }
   }
 
