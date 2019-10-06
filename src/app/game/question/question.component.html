@@ -3,12 +3,11 @@
     </mat-card-title>
     <mat-card-title *ngIf="question.operationType === 'MULTIPLICATION'"> {{question.operand1}} x {{question.operand2}} =
     </mat-card-title>
-    <mat-form-field>
-        <input matInput type="number" placeholder="Answer" [(ngModel)]='answer' (blur)="evaluateResult()">
-    </mat-form-field>
-    <img class="verdict correct" *ngIf="!blank && verdict" src=".\assets\correct.png">
-    <img class="verdict incorrect" *ngIf="!blank && !verdict" src=".\assets\incorrect.png">
+    <div class='container-answer'>
+        <mat-form-field>
+            <input matInput type="number" placeholder="Answer" [(ngModel)]='answer' (blur)="evaluateResult()">
+        </mat-form-field>
+        <img class="verdict correct" *ngIf="!blank && verdict === 'CORRECT'" src=".\assets\correct.svg">
+        <img class="verdict incorrect" *ngIf="!blank && verdict === 'INCORRECT'" src=".\assets\incorrect.svg">
+    </div>
 </mat-card>
-<!-- <div>{{question.operand1}}</div>
-    <div>{{question.operand2}}</div>
-    <input type='text'> -->

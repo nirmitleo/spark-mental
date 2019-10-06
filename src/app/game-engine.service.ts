@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Constants } from 'src/app/models/constants.model';
 import { Question } from 'src/app/models/question.model';
+import { Verdict } from 'src/app/models/verdict.model';
+import { ChangedVerdict } from './models/changed-verdict.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameEngineService {
   GAME_LENGTH = 10;
-  questions = []
+  questions = [];
+  verdictMap = {};
+  questionsLeft = this.GAME_LENGTH;
+  totalCorrectAttempts = 0;
+  totalIncorrectAttempts = 0;
+
+
 
   operationOptions = {
     ADDITION: {
@@ -17,7 +26,7 @@ export class GameEngineService {
     MULTIPLICATION: {
       operationType: 'MULTIPLICATION',
       MIN_DIFFICULTY: 2,
-      MAX_DIFFICULTY: 30,
+      MAX_DIFFICULTY: 25,
     }
   };
 
@@ -25,6 +34,8 @@ export class GameEngineService {
 
   newGame() {
     this.questions = [];
+    this.verdictMap = {};
+    this.questionsLeft = this.GAME_LENGTH;
     for (let i = 0; i < this.GAME_LENGTH; i++) {
 
       let operationType = this.operationOptions.MULTIPLICATION.operationType;
@@ -40,14 +51,45 @@ export class GameEngineService {
       }
 
       const question: Question = {
+        serialID: i,
         operand1: operand1,
         operand2: operand2,
         result: result,
         operationType: operationType
       };
 
+      const verdict: Verdict = {
+        serialID: i,
+        verdict: Constants.VERDICT_TYPE.NOT_ANSWERED,
+        incorrectVerdicts: new Set<number>(),
+      };
+      this.verdictMap[i] = verdict;
       this.questions.push(question);
     }
+  }
+
+  onVerdictChange(changedVerdict: ChangedVerdict) {
+    const serialID = changedVerdict.serialID;
+    const verdict = changedVerdict.verdict;
+    const value = changedVerdict.value;
+
+    if (this.verdictMap[serialID].verdict === Constants.VERDICT_TYPE.CORRECT) {
+      if (verdict === Constants.VERDICT_TYPE.INCORRECT) {
+        // incorrect attempt
+        this.questionsLeft++;
+        this.totalIncorrectAttempts++;
+      }
+    } else {
+      if (verdict === Constants.VERDICT_TYPE.CORRECT) {
+        // correct attempt
+        this.questionsLeft--;
+        this.totalCorrectAttempts++;
+      } else {
+        this.totalIncorrectAttempts++;
+      }
+
+    }
+    this.verdictMap[serialID] = verdict;
   }
 
   getOperand(operationType: string): number {

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GameEngineService } from 'src/app/game-engine.service';
+import { ChangedVerdict } from 'src/app/models/changed-verdict.model';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -8,6 +9,7 @@ import { GameEngineService } from 'src/app/game-engine.service';
 export class GameComponent implements OnInit {
   correct = 0;
 
+  @ViewChild('container', { read: ElementRef, static: false }) containerElementRef;
   constructor(
     public gameEngine: GameEngineService
   ) { }
@@ -16,18 +18,18 @@ export class GameComponent implements OnInit {
     this.gameEngine.newGame();
   }
 
-  onVerdictChange($event) {
-    if ($event) {
-      this.correct++;
-    } else {
-      this.correct--;
-    }
-    console.log(this.correct);
-
-    if (this.correct === this.gameEngine.GAME_LENGTH) {
-      console.log('game over!');
+  onVerdictChange(verdictChange: ChangedVerdict) {
+    this.gameEngine.onVerdictChange(verdictChange);
+    if (this.gameEngine.questionsLeft === 0) {
       this.gameEngine.newGame();
+      this.scrollToTop();
     }
   }
 
+  private scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }

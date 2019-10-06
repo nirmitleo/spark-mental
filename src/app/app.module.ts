@@ -13,13 +13,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GameComponent } from './game/game/game.component';
 import { QuestionComponent } from './game/question/question.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
-    QuestionComponent
+    QuestionComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
