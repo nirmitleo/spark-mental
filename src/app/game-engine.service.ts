@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Verify } from 'node:crypto';
 import { ChangedVerdict } from 'src/types/changed-verdict.type';
 import { OperationType } from 'src/types/operation-type.type';
 import { Question } from 'src/types/question.type';
