@@ -51,6 +51,7 @@ export class GameEngineService {
         operand2,
         result,
         operationType,
+        verdict: Verdict.NOT_ATTEMPTED,
       };
 
       const verdict = {
@@ -65,16 +66,19 @@ export class GameEngineService {
 
   onVerdictChange(changedVerdict: ChangedVerdict) {
     const serialID = changedVerdict.serialID;
-    const verdict = changedVerdict.verdict;
+    const newVerdict = changedVerdict.verdict;
 
     if (this.verdictMap[serialID].verdict === Verdict.CORRECT) {
-      if (verdict === Verdict.INCORRECT) {
+      if (newVerdict === Verdict.INCORRECT) {
         // incorrect attempt
         this.questionsLeft++;
         this.totalIncorrectAttempts++;
+      } else {
+        // not attempted
+        this.questionsLeft++;
       }
     } else {
-      if (verdict === Verdict.CORRECT) {
+      if (newVerdict === Verdict.CORRECT) {
         // correct attempt
         this.questionsLeft--;
         this.totalCorrectAttempts++;
@@ -82,7 +86,7 @@ export class GameEngineService {
         this.totalIncorrectAttempts++;
       }
     }
-    this.verdictMap[serialID] = verdict;
+    this.verdictMap[serialID] = newVerdict;
   }
 
   getOperand(operationType: OperationType): number {
