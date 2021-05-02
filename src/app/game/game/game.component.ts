@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Question } from 'src/app/question.model';
+import { Question } from 'src/types/question.type';
+import { Verdict } from 'src/types/verdict.type';
+
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -10,7 +12,6 @@ export class GameComponent implements OnInit {
   MIN_DIFFICULTY = 9;
   MAX_DIFFICULTY = 13;
 
-  correct = 0;
   questions: Question[] = [];
 
   constructor() {}
@@ -18,15 +19,11 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.initializeGame();
   }
-  onVerdictChange($event) {
-    if ($event) {
-      this.correct++;
-    } else {
-      this.correct--;
-    }
-    console.log(this.correct);
 
-    if (this.correct === this.GAME_LENGTH) {
+  onVerdictChange() {
+    const gameStatus: GameStatus = this.getGameStatus();
+
+    if (gameStatus.correct === this.GAME_LENGTH) {
       console.log('game over!');
       setTimeout(() => {
         this.initializeGame();
@@ -34,15 +31,38 @@ export class GameComponent implements OnInit {
     }
   }
 
+  private getGameStatus(): GameStatus {
+    let correct = 0;
+    let incorrect = 0;
+    for (let i = 0; i < this.questions.length; i++) {
+      const question: Question = this.questions[i];
+      const verdict = question.verdict;
+      switch (verdict) {
+        case Verdict.CORRECT:
+          correct++;
+          break;
+        case Verdict.INCORRECT:
+          incorrect++;
+          break;
+      }
+    }
+    return {
+      correct,
+      incorrect,
+      notAnswered: this.GAME_LENGTH - correct - incorrect,
+    };
+  }
+
   private initializeGame() {
-    this.correct = 0;
     this.questions = [];
     for (let i = 0; i < this.GAME_LENGTH; i++) {
       const [operand1, operand2] = this.getIntegerOperand();
       const question: Question = {
+        index: i,
         operand1,
         operand2,
         result: operand1 * operand2,
+        verdict: Verdict.NOT_ATTEMPTED,
       };
 
       this.questions.push(question);

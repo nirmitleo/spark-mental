@@ -1,5 +1,5 @@
 <div class="container">
-    <ng-container *ngFor="let question of questions">
-        <app-question [question]="question" (verdictChange)="onVerdictChange($event);"></app-question>
-    </ng-container>
+  <ng-container *ngFor="let question of questions">
+    <app-question [question]="question" (verdictChange)="onVerdictChange()"></app-question>
+  </ng-container>
 </div>

@@ -1,34 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Question } from 'src/app/question.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Question } from 'src/types/question.type';
+import { Verdict } from 'src/types/verdict.type';
 
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+  styleUrls: ['./question.component.scss'],
 })
-export class QuestionComponent implements OnInit {
-
-  blank = true;
-  verdict = false;
+export class QuestionComponent {
   @Input() question: Question;
-  @Output() verdictChange = new EventEmitter<boolean>();
+  @Output() verdictChange = new EventEmitter();
 
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor() {}
 
   evaluateResult(event) {
     const response: string = event.target.value;
-    this.blank = true;
-    this.verdict = false;
-
     if (response.length > 0) {
-      this.blank = false;
-      const result = parseInt(response, 10);
-      this.verdict = result === this.question.result;
-      this.verdictChange.emit(this.verdict);
+      const result: number = parseInt(response, 10);
+      this.question.verdict = result === this.question.result ? Verdict.CORRECT : Verdict.INCORRECT;
+    } else {
+      this.question.verdict = Verdict.NOT_ATTEMPTED;
     }
+    this.verdictChange.emit();
   }
 }

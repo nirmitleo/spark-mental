@@ -1,0 +1,5 @@
+export enum Verdict {
+  NOT_ATTEMPTED = 'NOT_ATTEMPTED',
+  CORRECT = 'CORRECT',
+  INCORRECT = 'INCORRECT',
+}
