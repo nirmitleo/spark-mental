@@ -17,8 +17,10 @@ export class GameEngineService {
 
   operationOptions = new Map<OperationType, { MIN_DIFFICULTY: number; MAX_DIFFICULTY: number }>();
 
-  MIN = 11;
-  MAX = 13;
+  MIN_OPERAND1 = 11;
+  MAX_OPERAND1 = 13;
+  MIN_OPERAND2 = 11;
+  MAX_OPERAND2 = 13;
 
   constructor() {
     this.operationOptions.set(OperationType.ADDITION, {
@@ -41,8 +43,8 @@ export class GameEngineService {
         operationType = OperationType.ADDITION;
       }
 
-      let operand1 = this.getOperand(operationType);
-      let operand2 = this.getRandomInteger(this.MIN, this.MAX);
+      let operand1 = this.getRandomInteger(this.MIN_OPERAND1, this.MAX_OPERAND1);
+      let operand2 = this.getRandomInteger(this.MIN_OPERAND2, this.MAX_OPERAND2);
 
       [operand1, operand2] = this.shuffle(operand1, operand2);
 

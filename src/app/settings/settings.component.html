@@ -1,12 +1,21 @@
 <h1 mat-dialog-title>Settings</h1>
 <div mat-dialog-content>
-  <p>Multiplication</p>
+  <p>Operand 1</p>
   <mat-form-field>
     <mat-label>Min</mat-label>
-    <input matInput [ngModel]="min" (ngModelChange)="onMinValueChange($event)" />
+    <input matInput [ngModel]="minOperand1" (ngModelChange)="onValueChange($event, 'operand1', 'min')" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Max</mat-label>
-    <input matInput [ngModel]="max" (ngModelChange)="onMaxValueChange($event)" />
+    <input matInput [ngModel]="maxOperand1" (ngModelChange)="onValueChange($event, 'operand1', 'max')" />
+  </mat-form-field>
+  <p>Operand 2</p>
+  <mat-form-field>
+    <mat-label>Min</mat-label>
+    <input matInput [ngModel]="minOperand2" (ngModelChange)="onValueChange($event, 'operand2', 'min')" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Max</mat-label>
+    <input matInput [ngModel]="maxOperand2" (ngModelChange)="onValueChange($event, 'operand2', 'max')" />
   </mat-form-field>
 </div>

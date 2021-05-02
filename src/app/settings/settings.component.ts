@@ -8,33 +8,48 @@ import { GameEngineService } from '../game-engine.service';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  min: string;
-  max: string;
+  minOperand1: string;
+  maxOperand1: string;
+  minOperand2: string;
+  maxOperand2: string;
 
   constructor(
     public gameEngineService: GameEngineService, // force break
     public dialogRef: MatDialogRef<SettingsComponent>
   ) {
-    this.min = this.gameEngineService.MIN + '';
-    this.max = this.gameEngineService.MAX + '';
+    this.minOperand1 = this.gameEngineService.MIN_OPERAND1 + '';
+    this.maxOperand1 = this.gameEngineService.MAX_OPERAND1 + '';
+    this.minOperand2 = this.gameEngineService.MIN_OPERAND2 + '';
+    this.maxOperand2 = this.gameEngineService.MAX_OPERAND2 + '';
   }
 
   ngOnInit(): void {}
 
-  onMinValueChange(value) {
-    try {
-      this.min = value;
-      this.gameEngineService.MIN = parseInt(this.min, 10);
-    } catch (e) {
-      console.error('Not a valid value for min');
+  onValueChange(value: string, operandType: 'operand1' | 'operand2', rangeType: 'min' | 'max') {
+    if (!this.isInteger(value)) {
+      return;
+    }
+    if (rangeType === 'min') {
+      if (operandType === 'operand1') {
+        this.gameEngineService.MIN_OPERAND1 = parseInt(value, 10);
+      } else {
+        this.gameEngineService.MIN_OPERAND2 = parseInt(value, 10);
+      }
+    } else {
+      if (operandType === 'operand1') {
+        this.gameEngineService.MAX_OPERAND1 = parseInt(value, 10);
+      } else {
+        this.gameEngineService.MAX_OPERAND2 = parseInt(value, 10);
+      }
     }
   }
-  onMaxValueChange(value) {
+
+  private isInteger(value: string): boolean {
     try {
-      this.max = value;
-      this.gameEngineService.MAX = parseInt(this.max, 10);
-    } catch (e) {
-      console.error('Not a valid value for max');
+      parseInt(value, 10);
+      return true;
+    } catch (error) {
+      return false;
     }
   }
 }
