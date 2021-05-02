@@ -3,15 +3,10 @@
   <p>Multiplication</p>
   <mat-form-field>
     <mat-label>Min</mat-label>
-    <input matInput [(ngModel)]="data.animal" />
+    <input matInput [ngModel]="min" (ngModelChange)="onMinValueChange($event)" />
   </mat-form-field>
-  <p>What's your favorite animal?</p>
   <mat-form-field>
-    <mat-label>Favorite Animal</mat-label>
-    <input matInput [(ngModel)]="data.animal" />
+    <mat-label>Max</mat-label>
+    <input matInput [ngModel]="max" (ngModelChange)="onMaxValueChange($event)" />
   </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
 </div>

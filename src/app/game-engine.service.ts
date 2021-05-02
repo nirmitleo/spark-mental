@@ -17,6 +17,9 @@ export class GameEngineService {
 
   operationOptions = new Map<OperationType, { MIN_DIFFICULTY: number; MAX_DIFFICULTY: number }>();
 
+  MIN = 11;
+  MAX = 13;
+
   constructor() {
     this.operationOptions.set(OperationType.ADDITION, {
       MIN_DIFFICULTY: 100,
@@ -38,8 +41,11 @@ export class GameEngineService {
         operationType = OperationType.ADDITION;
       }
 
-      const operand1 = this.getOperand(operationType);
-      const operand2 = this.getOperand(operationType);
+      let operand1 = this.getOperand(operationType);
+      let operand2 = this.getRandomInteger(this.MIN, this.MAX);
+
+      [operand1, operand2] = this.shuffle(operand1, operand2);
+
       let result = operand1 * operand2;
       if (operationType === OperationType.ADDITION) {
         result = operand1 + operand2;
@@ -91,9 +97,21 @@ export class GameEngineService {
 
   getOperand(operationType: OperationType): number {
     const operationOptions = this.operationOptions.get(operationType);
+    const operand = this.getRandomInteger(operationOptions.MIN_DIFFICULTY, operationOptions.MAX_DIFFICULTY);
+    return operand;
+  }
+
+  private getRandomInteger(low: number, high: number): number {
     let value = Math.random();
-    value = value * (operationOptions.MAX_DIFFICULTY - operationOptions.MIN_DIFFICULTY + 1);
-    value = value + operationOptions.MIN_DIFFICULTY;
+    value = value * (high - low + 1);
+    value = value + low;
     return Math.trunc(value);
+  }
+
+  private shuffle(value1: number, value2: number): [number, number] {
+    if (Math.trunc(Math.random() * 100) % 2 === 0) {
+      return [value1, value2];
+    }
+    return [value2, value1];
   }
 }
