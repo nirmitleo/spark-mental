@@ -1,16 +1,21 @@
 mat-card {
-    margin: 15px;
+  margin: 15px;
+  background: #012531;
+}
+.mat-input-element {
+  caret-color: #ffffff;
 }
 .verdict {
-    position: relative;
-    top: 15px;
-    left: 10px;
-    height: 35px;
-    &.correct {
-        filter: invert(100%) sepia(41%) saturate(3674%) hue-rotate(59deg) brightness(99%) contrast(83%); 
-        
-    }
-    &.incorrect {
-        filter: invert(22%) sepia(63%) saturate(3794%) hue-rotate(325deg) brightness(92%) contrast(98%);
-    }
+  position: relative;
+  top: 15px;
+  left: 10px;
+  height: 35px;
+  &.correct {
+    filter: invert(100%) sepia(41%) saturate(3674%) hue-rotate(59deg)
+      brightness(99%) contrast(83%);
+  }
+  &.incorrect {
+    filter: invert(22%) sepia(63%) saturate(3794%) hue-rotate(325deg)
+      brightness(92%) contrast(98%);
+  }
 }

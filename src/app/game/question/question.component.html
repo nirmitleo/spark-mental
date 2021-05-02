@@ -1,10 +1,20 @@
 <mat-card>
-    <mat-card-title> {{question.operand1}} x {{question.operand2}} = </mat-card-title>
-    <mat-form-field>
-        <input matInput placeholder="Answer" (blur)="evaluateResult($event)">
-    </mat-form-field>
-    <img class="verdict correct" *ngIf="!blank && verdict" src=".\assets\correct.svg">
-    <img class="verdict incorrect" *ngIf="!blank && !verdict" src=".\assets\incorrect.svg">
+  <mat-card-title>
+    {{ question.operand1 }} x {{ question.operand2 }} =
+  </mat-card-title>
+  <mat-form-field>
+    <input matInput placeholder="Answer" (blur)="evaluateResult($event)" />
+  </mat-form-field>
+  <img
+    class="verdict correct"
+    *ngIf="!blank && verdict"
+    src="./assets/correct.svg"
+  />
+  <img
+    class="verdict incorrect"
+    *ngIf="!blank && !verdict"
+    src="./assets/incorrect.svg"
+  />
 </mat-card>
 <!-- <div>{{question.operand1}}</div>
     <div>{{question.operand2}}</div>

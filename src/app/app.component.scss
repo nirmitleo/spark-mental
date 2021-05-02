@@ -1,3 +1,10 @@
 body {
-    background-color: #e91e63;
+  // background-color: #e91e63;
+  background-color: #0c5b70;
+}
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #ffffff !important;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: #ffffff;
 }
