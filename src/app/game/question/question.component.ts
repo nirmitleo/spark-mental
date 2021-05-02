@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ChangedVerdict } from 'src/types/changed-verdict.type';
 import { Question } from 'src/types/question.type';
 import { Verdict } from 'src/types/verdict.type';
@@ -11,13 +11,20 @@ import { Verdict } from 'src/types/verdict.type';
 export class QuestionComponent implements OnInit {
   answer: number;
   verdict: Verdict;
+
   @Input() public question: Question;
   @Output() verdictChange = new EventEmitter<ChangedVerdict>();
+
+  @ViewChild('answerMatInputField', { read: ElementRef, static: true }) answerMatInputField: ElementRef<HTMLInputElement>;
 
   constructor() {}
 
   ngOnInit() {
     this.verdict = this.question.verdict;
+  }
+
+  public focus() {
+    this.answerMatInputField?.nativeElement?.focus();
   }
 
   evaluateResult() {

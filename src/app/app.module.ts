@@ -11,12 +11,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './game/game/game.component';
+import { GameComponent } from './game/game.component';
 import { QuestionComponent } from './game/question/question.component';
 import { HeaderComponent } from './header/header.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
-  declarations: [AppComponent, GameComponent, QuestionComponent, HeaderComponent],
+  declarations: [AppComponent, GameComponent, QuestionComponent, HeaderComponent, SettingsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
