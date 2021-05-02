@@ -1,0 +1,13 @@
+<div class="header-container">
+    <div class="correct-option menu-option">
+        <img class="correct" src=".\assets\correct.svg">
+        <span class="correct-answers">{{gameEngine.totalCorrectAttempts}}</span>
+    </div>
+    <div class="incorrect-option menu-option">
+        <img class="incorrect" src=".\assets\incorrect.svg">
+        <span class="incorrect-answers">{{gameEngine.totalIncorrectAttempts}}</span>
+    </div>
+    <div class="setting-option menu-option">
+        <img class="settings" src=".\assets\settings.svg" (click)="openSettings()">
+    </div>
+</div>

@@ -1,9 +1,7 @@
-import { Verdict } from './verdict.type';
-
 export interface Question {
-  index: number;
+  serialID: number;
   operand1: number;
   operand2: number;
   result: number;
-  verdict: Verdict;
+  operationType: OperationType.ADDITION | OperationType.MULTIPLICATION;
 }

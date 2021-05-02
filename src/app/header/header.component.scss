@@ -1,0 +1,46 @@
+.header-container {
+  font-family: Roboto;
+  position: fixed;
+  top: 0px;
+  height: 50px;
+  width: 100%;
+  background-color: #012531;
+  color: white;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .menu-option {
+    height: 30px;
+    // background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      height: 40%;
+    }
+
+    &.correct-option,
+    &.incorrect-option {
+      width: 140px;
+    }
+
+    .correct-answers,
+    .incorrect-answers {
+      padding-left: 5px;
+    }
+
+    .correct {
+      filter: invert(77%) sepia(46%) saturate(4618%) hue-rotate(61deg) brightness(108%) contrast(103%);
+    }
+    .incorrect {
+      filter: invert(17%) sepia(67%) saturate(5300%) hue-rotate(333deg) brightness(92%) contrast(105%);
+    }
+    .settings {
+      position: absolute;
+      right: 3%;
+      filter: invert(63%) sepia(0%) saturate(698%) hue-rotate(237deg) brightness(80%) contrast(84%);
+    }
+  }
+}
