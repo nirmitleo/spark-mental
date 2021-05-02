@@ -1,18 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GameEngineService } from 'src/app/game-engine.service';
-import { ChangedVerdict } from 'src/app/models/changed-verdict.model';
+import { ChangedVerdict } from 'src/types/changed-verdict.type';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit {
   correct = 0;
 
   @ViewChild('container', { read: ElementRef, static: false }) containerElementRef;
-  constructor(
-    public gameEngine: GameEngineService
-  ) { }
+  constructor(public gameEngine: GameEngineService) {}
 
   ngOnInit() {
     this.gameEngine.newGame();
@@ -29,7 +27,7 @@ export class GameComponent implements OnInit {
   private scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 }

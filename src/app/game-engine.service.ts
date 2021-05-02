@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Constants } from 'src/app/models/constants.model';
-import { Question } from 'src/app/models/question.model';
-import { Verdict } from 'src/app/models/verdict.model';
-import { ChangedVerdict } from './models/changed-verdict.model';
+import { ChangedVerdict } from 'src/types/changed-verdict.type';
+import { OperationType } from 'src/types/operation-type.type';
+import { Question } from 'src/types/question.type';
+import { Verdict } from 'src/types/verdict.type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GameEngineService {
   GAME_LENGTH = 10;
@@ -15,52 +15,47 @@ export class GameEngineService {
   totalCorrectAttempts = 0;
   totalIncorrectAttempts = 0;
 
+  operationOptions = new Map<OperationType, { MIN_DIFFICULTY: number; MAX_DIFFICULTY: number }>();
 
-
-  operationOptions = {
-    ADDITION: {
-      operationType: 'ADDITION',
+  constructor() {
+    this.operationOptions.set(OperationType.ADDITION, {
       MIN_DIFFICULTY: 100,
-      MAX_DIFFICULTY: 999
-    },
-    MULTIPLICATION: {
-      operationType: 'MULTIPLICATION',
+      MAX_DIFFICULTY: 999,
+    });
+    this.operationOptions.set(OperationType.MULTIPLICATION, {
       MIN_DIFFICULTY: 2,
-      MAX_DIFFICULTY: 25,
-    }
-  };
-
-  constructor() { }
+      MAX_DIFFICULTY: 13,
+    });
+  }
 
   newGame() {
     this.questions = [];
     this.verdictMap = {};
     this.questionsLeft = this.GAME_LENGTH;
     for (let i = 0; i < this.GAME_LENGTH; i++) {
-
-      let operationType = this.operationOptions.MULTIPLICATION.operationType;
-      if (Math.random() <= 0.3) {
-        operationType = this.operationOptions.ADDITION.operationType;
+      let operationType = OperationType.MULTIPLICATION;
+      if (Math.random() <= -1) {
+        operationType = OperationType.ADDITION;
       }
 
       const operand1 = this.getOperand(operationType);
       const operand2 = this.getOperand(operationType);
       let result = operand1 * operand2;
-      if (operationType === this.operationOptions.ADDITION.operationType) {
+      if (operationType === OperationType.ADDITION) {
         result = operand1 + operand2;
       }
 
       const question: Question = {
         serialID: i,
-        operand1: operand1,
-        operand2: operand2,
-        result: result,
-        operationType: operationType
+        operand1,
+        operand2,
+        result,
+        operationType,
       };
 
-      const verdict: Verdict = {
+      const verdict = {
         serialID: i,
-        verdict: Constants.VERDICT_TYPE.NOT_ANSWERED,
+        verdict: Verdict.NOT_ATTEMPTED,
         incorrectVerdicts: new Set<number>(),
       };
       this.verdictMap[i] = verdict;
@@ -71,35 +66,27 @@ export class GameEngineService {
   onVerdictChange(changedVerdict: ChangedVerdict) {
     const serialID = changedVerdict.serialID;
     const verdict = changedVerdict.verdict;
-    const value = changedVerdict.value;
 
-    if (this.verdictMap[serialID].verdict === Constants.VERDICT_TYPE.CORRECT) {
-      if (verdict === Constants.VERDICT_TYPE.INCORRECT) {
+    if (this.verdictMap[serialID].verdict === Verdict.CORRECT) {
+      if (verdict === Verdict.INCORRECT) {
         // incorrect attempt
         this.questionsLeft++;
         this.totalIncorrectAttempts++;
       }
     } else {
-      if (verdict === Constants.VERDICT_TYPE.CORRECT) {
+      if (verdict === Verdict.CORRECT) {
         // correct attempt
         this.questionsLeft--;
         this.totalCorrectAttempts++;
       } else {
         this.totalIncorrectAttempts++;
       }
-
     }
     this.verdictMap[serialID] = verdict;
   }
 
-  getOperand(operationType: string): number {
-    let operationOptions = null;
-
-    if (operationType === this.operationOptions.ADDITION.operationType) {
-      operationOptions = this.operationOptions.ADDITION;
-    } else if (operationType === this.operationOptions.MULTIPLICATION.operationType) {
-      operationOptions = this.operationOptions.MULTIPLICATION;
-    }
+  getOperand(operationType: OperationType): number {
+    const operationOptions = this.operationOptions.get(operationType);
     let value = Math.random();
     value = value * (operationOptions.MAX_DIFFICULTY - operationOptions.MIN_DIFFICULTY + 1);
     value = value + operationOptions.MIN_DIFFICULTY;

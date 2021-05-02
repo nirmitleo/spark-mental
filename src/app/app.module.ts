@@ -15,14 +15,8 @@ import { GameComponent } from './game/game/game.component';
 import { QuestionComponent } from './game/question/question.component';
 import { HeaderComponent } from './header/header.component';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    GameComponent,
-    QuestionComponent,
-    HeaderComponent
-  ],
+  declarations: [AppComponent, GameComponent, QuestionComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,6 +31,6 @@ import { HeaderComponent } from './header/header.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

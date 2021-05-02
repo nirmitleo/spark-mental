@@ -1,7 +1,5 @@
 <div class="container" #container>
-    <ng-container *ngFor="let question of gameEngine.questions">
-        <app-question [question]="question" (verdictChange)="onVerdictChange($event);"></app-question>
-    </ng-container>
+  <ng-container *ngFor="let question of gameEngine.questions">
+    <app-question [question]="question" (verdictChange)="onVerdictChange($event)"></app-question>
+  </ng-container>
 </div>
-
-<!-- <button (click)="scrollToTop()">Scroll to top</button> -->

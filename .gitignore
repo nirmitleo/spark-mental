@@ -45,3 +45,11 @@ package-lock.json
 # System Files
 .DS_Store
 Thumbs.db
+
+# Git files
+package-lock.json
+.tool-versions
+
+
+# Firebase
+.firebase/*

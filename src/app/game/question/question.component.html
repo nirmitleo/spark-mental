@@ -1,13 +1,11 @@
 <mat-card>
-    <mat-card-title *ngIf="question.operationType === 'ADDITION'"> {{question.operand1}} + {{question.operand2}} =
-    </mat-card-title>
-    <mat-card-title *ngIf="question.operationType === 'MULTIPLICATION'"> {{question.operand1}} x {{question.operand2}} =
-    </mat-card-title>
-    <div class='container-answer'>
-        <mat-form-field>
-            <input matInput type="number" placeholder="Answer" [(ngModel)]='answer' (blur)="evaluateResult()">
-        </mat-form-field>
-        <img class="verdict correct" *ngIf="!blank && verdict === 'CORRECT'" src=".\assets\correct.svg">
-        <img class="verdict incorrect" *ngIf="!blank && verdict === 'INCORRECT'" src=".\assets\incorrect.svg">
-    </div>
+  <mat-card-title *ngIf="question.operationType === 'ADDITION'"> {{ question.operand1 }} + {{ question.operand2 }} = </mat-card-title>
+  <mat-card-title *ngIf="question.operationType === 'MULTIPLICATION'"> {{ question.operand1 }} x {{ question.operand2 }} = </mat-card-title>
+  <div class="container-answer">
+    <mat-form-field>
+      <input matInput type="number" placeholder="Answer" [(ngModel)]="answer" (blur)="evaluateResult()" />
+    </mat-form-field>
+    <img class="verdict correct" *ngIf="question.verdict === 'CORRECT'" src="./assets/correct.svg" />
+    <img class="verdict incorrect" *ngIf="question.verdict === 'INCORRECT'" src="./assets/incorrect.svg" />
+  </div>
 </mat-card>
