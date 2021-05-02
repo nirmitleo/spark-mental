@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Verify } from 'node:crypto';
 import { ChangedVerdict } from 'src/types/changed-verdict.type';
 import { OperationType } from 'src/types/operation-type.type';
 import { Question } from 'src/types/question.type';
@@ -81,16 +82,25 @@ export class GameEngineService {
         // incorrect attempt
         this.questionsLeft++;
         this.totalIncorrectAttempts++;
-      } else {
+      } else if (newVerdict === Verdict.NOT_ATTEMPTED) {
         // not attempted
         this.questionsLeft++;
       }
-    } else {
+    } else if (this.verdictMap[serialID].verdict === Verdict.INCORRECT) {
       if (newVerdict === Verdict.CORRECT) {
         // correct attempt
         this.questionsLeft--;
         this.totalCorrectAttempts++;
-      } else {
+      } else if (newVerdict === Verdict.INCORRECT) {
+        this.totalIncorrectAttempts++;
+      } else if (newVerdict === Verdict.NOT_ATTEMPTED) {
+        this.questionsLeft++;
+      }
+    } else if (this.verdictMap[serialID].verdict === Verdict.NOT_ATTEMPTED) {
+      if (newVerdict === Verdict.CORRECT) {
+        this.questionsLeft--;
+        this.totalCorrectAttempts++;
+      } else if (newVerdict === Verdict.INCORRECT) {
         this.totalIncorrectAttempts++;
       }
     }
