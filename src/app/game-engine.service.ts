@@ -9,6 +9,7 @@ import { Verdict } from 'src/types/verdict.type';
 })
 export class GameEngineService {
   GAME_LENGTH = 10;
+
   questions = [];
   verdictMap = {};
   questionsLeft = this.GAME_LENGTH;
@@ -20,7 +21,7 @@ export class GameEngineService {
   MIN_OPERAND1 = 11;
   MAX_OPERAND1 = 13;
   MIN_OPERAND2 = 11;
-  MAX_OPERAND2 = 13;
+  MAX_OPERAND2 = 20;
 
   constructor() {
     this.operationOptions.set(OperationType.ADDITION, {
@@ -65,7 +66,6 @@ export class GameEngineService {
       const verdict = {
         serialID: i,
         verdict: Verdict.NOT_ATTEMPTED,
-        incorrectVerdicts: new Set<number>(),
       };
       this.verdictMap[i] = verdict;
       this.questions.push(question);
@@ -103,7 +103,8 @@ export class GameEngineService {
         this.totalIncorrectAttempts++;
       }
     }
-    this.verdictMap[serialID] = newVerdict;
+    console.log(`Questions left: ${this.questionsLeft}, Total Correct attempts: ${this.totalCorrectAttempts}, Total Incorrect attempts: ${this.totalIncorrectAttempts}`);
+    this.verdictMap[serialID].verdict = newVerdict;
   }
 
   getOperand(operationType: OperationType): number {
